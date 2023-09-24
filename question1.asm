@@ -1,35 +1,63 @@
  .data
-    fileName: .asciiz "hey.txt" 
-    buffer: .space 1024
+    #  input file
+    inputFile: .asciiz "C:/Users/Deshy Dan/OneDrive - University of Cape Town/2023/2nd semester/CSC2002S/Mips Image processing/test.txt" 
+    inputText: .space 11024
+    # output file
+    outputFile:.asciiz "C:/Users/Deshy Dan/OneDrive - University of Cape Town/2023/2nd semester/CSC2002S/Mips Image processing/out.txt" 
+    
 
 .text 
 main:
-## opening the file for reading
-    li $v0 , 13     # opening the file
-    la $a0 , fileName
-    li $a1 , 2      # reading the file
+    # opening the file
+    # opening the input file 
+    li $v0 , 13
+    la $a0 , inputFile
+    li $a1 , 0
     li $a2 , 0
     syscall
 
-    # savinghte file descriptor
-    move $s0 , $v0 
+    move $t0 , $v0 
 
-    # reading from the file
-    # li $v0 , 14     # call to read from file
-    # move $a0 , $s0 
-    # la $a1 , buffer 
-    # li $a2 , 1024
-    # syscall
-    
-    # Writing to the file
-    # print the buffer
-    li $v0 , 4
-    la $a0 , buffer
+    #opening the output file
+    li $v0 , 13
+    la $a0 , outputFile
+    li $a1 , 1
+    li $a2 , 0 
     syscall
 
-    j closeFile
+    move $t1 , $v0
 
-closeFile:
-li $v0 , 16
-syscall
+    # reading input file content into inputText
+    li $v0 , 14
+    move $a0 , $t0 
+    la $a1, inputText
+    li $a2, 1024
+    syscall
+
+
+
+
+
+    # writing into output file
+    li $v0 , 15
+    move $a0 , $t1
+    la $a1 , inputText
+    li $a3 , 10 
+    syscall
+
+closeFiles:
+
+    # closing the input file
+    li      $v0, 16
+    move    $a0, $t0
+    syscall
+    # closing the output file
+    li      $v0, 16
+    move 	$a0, $t1
+    syscall
+    j exit
+
+exit:
+    li $v0 , 10 
+    syscall
     
