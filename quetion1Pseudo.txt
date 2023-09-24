@@ -1,0 +1,55 @@
+// Open file and read all lines into a list
+
+var lines = readFileIntoList(fileLocation)
+var newLines = []
+
+// Loop over the first 4 lines 
+for (int i = 0; i < 4; i++) {
+  newLines.append(lines[i])
+}
+
+double originalPixelTotal = 0
+double newPixelTotal = 0
+int pixelCount = 0
+
+// Loop over the rest of the lines 
+for (int i = 4; i < lines.length; i++) {
+  var line = lines[i]
+
+
+  // Loop over each pixel in the line
+ 
+    var originalBrightness = Integer.parseInt(line)
+    var newBrightness = increaseBrightness(originalBrightness + 10)
+
+    originalPixelTotal += originalBrightness
+    newPixelTotal += newBrightness
+    pixelCount++
+
+    newLines.append(newBrightness.toString())
+  }
+
+
+
+// Write all lines to the new file
+writeLinesToFile(newFileLocation, newLines)
+
+double originalPixelAverage = originalPixelTotal / pixelCount
+double newPixelAverage = newPixelTotal / pixelCount
+
+print("Average pixel value of the original image: /n [originalPixelAverage]")
+print("Average pixel value of the new image: /n [newPixelAverage]")
+
+
+
+------------------------------------------Utility methods------------------------------------------
+
+function increaseBrightness(int newBrightness){
+    int brightness = newBrightness>255?255: newBrightness
+    return brightness
+}
+
+---------------------------------------------------------------------------------------------------
+
+
+
