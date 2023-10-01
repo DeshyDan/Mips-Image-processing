@@ -1,4 +1,4 @@
-// Open file and read all lines into a list
+.// Open file and read all lines into a list
 
 var lines = readFileIntoList(fileLocation)
 var newLines = []

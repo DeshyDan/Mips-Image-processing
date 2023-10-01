@@ -1,17 +1,20 @@
 .data
     #  input file
-    inputFile: .asciiz "C:/Users/Deshy Dan/OneDrive - University of Cape Town/2023/2nd semester/CSC2002S/Mips Image processing/images/house_64_in_ascii_crlf.ppm" 
+    inputFile: .asciiz "C:/Users/Deshy Dan/OneDrive - University of Cape Town/2023/2nd semester/CSC2002S/Mips Image processing/images/original/house_64_in_ascii_crlf.ppm" 
     inputText: .space 80000
     headerInfo: .space 19
     outputText: .space 1000
     # output file
-    outputFile:.asciiz "C:/Users/Deshy Dan/OneDrive - University of Cape Town/2023/2nd semester/CSC2002S/Mips Image processing/hello.ppm" 
+    outputFile: .asciiz "C:/Users/Deshy Dan/OneDrive - University of Cape Town/2023/2nd semester/CSC2002S/Mips Image processing/images/output/output.ppm"
     # descriptors
     inputFileDescriptor: .word 0   
     outputFileDescriptor: .word 0 
     # pixel totals 
     oldPixelTotal: .word 1   # allocate a word for the old pixel total
     newPixelTotal: .word 1   # allocate a word for the new pixel total
+    # responses
+    oldPixelTotalResponse: .asciiz "The old pixel total is: "
+    newPixelTotalResponse: .asciiz "The new pixel total is: "
 
 .text 
 main:
@@ -190,7 +193,28 @@ copy_done:
     j computeLines
 
 endComputeLines:
+    lw $t2, oldPixelTotal  # load the old pixel total from memory
+    lw $t3, newPixelTotal  # load the new pixel total from memory
+   
+    li $v0 , 4
+    la $a0 , oldPixelTotalResponse
+    divu $t2, $t2, 12288  # divide the old pixel total by 12288 to get the average
+    mtc1 $t2, $f0         # move the result to the floating-point register $f0
+    li $v0, 2             # system call for printing a float
+    syscall               # print the average value
 
+    # new line character
+    li $v0, 11           # load syscall for print_character
+    li $a0, 10           # load the newline character into $a0
+    syscall              # print the newline character
+
+
+    li $v0 , 4
+    la $a0 , newPixelTotalResponse
+    divu $t3, $t3, 12288  # divide the new pixel total by 12288 to get the average
+    mtc1 $t3, $f0         # move the result to the floating-point register $f0
+    li $v0, 2             # system call for printing a float
+    syscall               # print the average value
    
     j closeFiles
 
