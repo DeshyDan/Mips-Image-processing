@@ -85,8 +85,8 @@ stringToInt:
 
     lb $t2,($s2)
 
-    beq $t2,10,Line # if the value is a new line
-    beq $t2,0,writeHeader # if the value is a null terminator
+    beq $t2, 10,  Line # if the value is a new line
+    beq $t2, 0, writeHeader # if the value is a null terminator
     sub $t2, $t2, 48
     mul $t4, $t4, 10
     add $t4, $t4, $t2
@@ -103,7 +103,7 @@ Line:
     beq $t3, 3, calcAvg
     j stringToInt
 
-    calcAvg:
+calcAvg:
     addi $t6, $t6, 1
     beq $t6, 4097, writeHeader
 
@@ -117,7 +117,7 @@ Line:
     j intToString
 
     ADD1:
-    blt $t4,10,nAD # if the value is less than 10
+    blt $t4,10,nADD # if the value is less than 10
     addi $s3,$s3,2 
     li $t8,10 # adding a new line
     sb $t8,($s3) 
@@ -131,30 +131,29 @@ Line:
 
 
 intToString:
-    beqz $t4, end   
+    beqz $t4, end   # if the value is 0
     divu $t4, $t4, 10     
     mfhi $t3             
     addi $t3, $t3, 48 
     sb $t3, -1($s3)       
-    addi $s3, $s3, -1 # moving the pointer to the left
+    addi $s3, $s3, -1 
     addi $t1,$t1,1
 
     j intToString
 
 
 end:
-    add $s3,$s3,$t1
-    addi $s3,$s3,1
-    li $t1,0
-    li$t3,0
-    li $t5,0
+    add $s3, $s3, $t1
+    addi $s3, $s3, 1
+    li $t1, 0
+    li$t3, 0
+    li $t5, 0
 
     j stringToInt
 
 writeHeader:
     sb $t2,($s3)
     sub $s4,$s3,$s4
-
     # writing the output file
     li $v0, 15
     move $a0, $s1

@@ -15,7 +15,7 @@ The process of running the program increase_brightness and greysale is the same.
 ```asm
 .data
     #  input file
-    inputFile: .asciiz "C:/Users/Deshy Dan/OneDrive - University of Cape Town/2023/2nd semester/CSC2002S/Mips Image processing/images/original/jet_64_in_ascii_crlf.ppm"
+    inputFile: .asciiz "path from root/Mips Image processing/images/original/jet_64_in_ascii_crlf.ppm"
 
 ```
 
@@ -25,5 +25,8 @@ The process of running the program increase_brightness and greysale is the same.
 
 ```asm
   # output file
-    outputFile:.asciiz "C:/Users/Deshy Dan/OneDrive - University of Cape Town/2023/2nd semester/CSC2002S/Mips Image processing/wow.ppm" 
+    outputFile:.asciiz "path from the root/Mips Image processing/wow.ppm" 
 ```
+
+## Outputs 
+The outputs of the program are in the folder: images/output
