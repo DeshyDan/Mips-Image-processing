@@ -131,30 +131,29 @@ Line:
 
 
 intToString:
-    beqz $t4, end   
+    beqz $t4, end   # if the value is 0
     divu $t4, $t4, 10     
     mfhi $t3             
     addi $t3, $t3, 48 
     sb $t3, -1($s3)       
-    addi $s3, $s3, -1 # moving the pointer to the left
+    addi $s3, $s3, -1 
     addi $t1,$t1,1
 
     j intToString
 
 
 end:
-    add $s3,$s3,$t1
-    addi $s3,$s3,1
-    li $t1,0
-    li$t3,0
-    li $t5,0
+    add $s3, $s3, $t1
+    addi $s3, $s3, 1
+    li $t1, 0
+    li$t3, 0
+    li $t5, 0
 
     j stringToInt
 
 writeHeader:
     sb $t2,($s3)
     sub $s4,$s3,$s4
-
     # writing the output file
     li $v0, 15
     move $a0, $s1
